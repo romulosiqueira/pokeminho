@@ -1,0 +1,45 @@
+<div style="display: grid; place-items: center">
+  <!-- create a signup form with trainer name,  email, password and initial pokemon -->
+
+  <form
+    [formGroup]="signupForm"
+    (ngSubmit)="onSubmit()"
+    style="display: flex; flex-direction: column"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Trainer Name</mat-label>
+      <input matInput type="text" formControlName="trainerName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Initial Pokemon</mat-label>
+      <mat-select formControlName="initialPokemon">
+        <mat-option
+          *ngFor="let pokemon of intialAvailablePokemons"
+          [value]="pokemon.name"
+        >
+          {{ pokemon.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="signupForm.invalid"
+      type="submit"
+    >
+      Signup
+    </button>
+  </form>
+</div>

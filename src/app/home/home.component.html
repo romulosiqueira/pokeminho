@@ -1,0 +1,163 @@
+<!-- create a three column layout with the following content:
+- left column: a list of the pokemon list and a search field
+- middle column: the pokemon details
+- right column: a trainer profile and list of favorite pokemons -->
+
+<!-- Path: src\app\home\home.component.html -->
+
+<mat-grid-list cols="3" rowHeight="100vh">
+  <mat-grid-tile colspan="1">
+    <mat-card style="max-height: 70vh">
+      <mat-card-header style="display: flex; justify-content: center">
+        <mat-card-title>Pokemons</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Search"
+            type="text"
+            (keyup)="onSearch($event)"
+          />
+        </mat-form-field>
+        <mat-list style="max-height: 50vh; overflow-y: scroll">
+          <mat-list-item
+            *ngFor="let pokemon of pokemonList"
+            (click)="selectPokemon(pokemon)"
+            style="cursor: pointer"
+          >
+            <h3 matLine>
+              {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) }}
+            </h3>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="1">
+    <mat-card *ngIf="selectedPokemon != null">
+      <mat-card-header style="display: flex; justify-content: center">
+        <mat-card-title>
+          <img matListAvatar [src]="selectedPokemon?.sprites?.front_default"
+        /></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <span>
+            {{
+              selectedPokemon.name.charAt(0).toUpperCase() +
+                selectedPokemon.name.slice(1) +
+                " #" +
+                selectedPokemon?.id
+            }}
+          </span>
+          <span>{{ selectedPokemon?.types[0].type.name }}</span>
+          <div style="margin-top: 20px; display: flex; justify-content: center">
+            <mat-chip-list>
+              <mat-chip
+                *ngFor="let ability of selectedPokemon?.abilities"
+                [color]="ability.slot % 2 == 0 ? 'primary' : 'accent'"
+                selected
+              >
+                {{ ability.ability.name }}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+          <div>
+            <mat-chip-list
+              style="margin-top: 20px; display: flex; justify-content: center"
+            >
+              <mat-chip
+                *ngFor="let stat of selectedPokemon?.stats"
+                [color]="stat.stat.name == 'hp' ? 'primary' : 'accent'"
+                selected
+              >
+                {{ stat.stat.name }}: {{ stat.base_stat }}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addToFavorites()"
+              *ngIf="!isFavorite()"
+            >
+              Add to Favorites
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="removeFromFavorites()"
+              *ngIf="isFavorite()"
+            >
+              Remove from Favorites
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="1">
+    <div style="display: flex; flex-direction: column">
+      <mat-card>
+        <mat-card-header style="display: flex; justify-content: center">
+          <mat-card-title>Trainer Profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="display: flex; justify-content: center">
+          <mat-list
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            "
+          >
+            <mat-list-item style="display: flex; justify-content: center">
+              <h3 matLine>{{ trainer.name }}</h3>
+            </mat-list-item>
+            <mat-list-item style="display: flex; justify-content: center">
+              <h3 matLine>Initial Pokemon: {{ trainer.initialPokemon }}</h3>
+            </mat-list-item>
+            <mat-list-item style="display: flex; justify-content: center">
+              <button mat-raised-button color="warn" (click)="logout()">
+                Logout
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header style="display: flex; justify-content: center">
+          <mat-card-title>Favorite Pokemons</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="display: flex; justify-content: center">
+          <mat-list>
+            <mat-list-item
+              *ngFor="let pokemon of favorites"
+              (click)="selectPokemon(pokemon)"
+              style="cursor: pointer"
+            >
+              <img matListAvatar [src]="pokemon?.image" />
+              <h3 matLine>
+                {{
+                  pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+                }}
+              </h3>
+            </mat-list-item></mat-list
+          ></mat-card-content
+        ></mat-card
+      >
+    </div>
+  </mat-grid-tile></mat-grid-list
+>

@@ -1,0 +1,15 @@
+<div style="display: grid; place-items: center; height: 100vh">
+  <div>
+    <div style="margin: 20px">
+      <button mat-raised-button (click)="newUser = false" style="margin: 20px">
+        Login
+      </button>
+      <button mat-raised-button (click)="newUser = true" style="margin: 20px">
+        Sign Up
+      </button>
+    </div>
+
+    <app-login *ngIf="!newUser"></app-login>
+    <app-signup *ngIf="newUser"></app-signup>
+  </div>
+</div>

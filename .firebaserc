@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pokeminho-app": {
+      "hosting": {
+        "pokeminho-app": [
+          "pokeminho-app"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pokeminho-app"
+  }
+}

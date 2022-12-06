@@ -1,0 +1,12 @@
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mat-chip-list-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+
+}
